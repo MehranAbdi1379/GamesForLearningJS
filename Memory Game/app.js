@@ -73,3 +73,48 @@ function countdown() {
 }
 }
 
+let score = document.getElementById('score');
+score.innerHTML= 0;
+
+function hideCards()
+{
+    
+    let turnedElementCount = 0;
+    let turnedElement;
+
+    Cards.forEach(element => {
+        element.style.backgroundImage = 'url("Images/blank.png")'
+    });
+
+    Cards.forEach(element => {
+        element.addEventListener('click' , (e) => {
+            console.log(element.style.backgroundImage)
+            if(turnedElementCount == 0 && element.style.backgroundImage !== 'url("Images/white.png")')
+            {
+                turnedElementCount++;
+                element.style.backgroundImage = "url('Images/" + element.id + ".png')";
+                turnedElement = element;
+                
+            }
+            else if(turnedElementCount == 1 && turnedElement != element && 
+                element.style.backgroundImage !== 'url("Images/white.png")')
+            {
+                if(turnedElement.id == element.id)
+                {
+                    turnedElement.style.backgroundImage = "url('Images/white.png')";
+                    element.style.backgroundImage = "url('Images/white.png')";
+                    turnedElementCount--;
+                    score.innerHTML++;
+                    if(score.innerHTML == 6)
+                    {
+                        window.location.reload();
+                    }
+                }
+                else{
+                    turnedElement.style.backgroundImage = 'url("Images/blank.png")'
+                    turnedElementCount--;
+                }
+            }
+        })
+    });
+}
