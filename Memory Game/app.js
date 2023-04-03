@@ -38,9 +38,21 @@ for (let i = 12; i > 0; i--) {
     cardArray.splice(randomNumber,1);
 }
 
-randomizedArray.forEach(element => {
-    console.log(element.name);
-    console.log(element.img);
-});
+const grid = document.getElementById('grid')
 
+for (let i = 0; i < randomizedArray.length; i++) {
+    let newElement = document.createElement('button');
+    newElement.id = 'card'+ "-" +randomizedArray[i].name;
+    newElement.style.backgroundImage = "url(" + randomizedArray[i].img + ")";
+    if(screen.width>screen.height)
+    {
+        newElement.style.height = "15vh";
+        newElement.style.width = "15vh";
+    }
+    else{
+        newElement.style.height = "15vw"
+        newElement.style.width = "15vw"
+    }
+    grid.appendChild(newElement);
+}
 
