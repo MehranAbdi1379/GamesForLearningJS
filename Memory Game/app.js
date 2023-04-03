@@ -88,7 +88,6 @@ function hideCards()
 
     Cards.forEach(element => {
         element.addEventListener('click' , (e) => {
-            console.log(element.style.backgroundImage)
             if(turnedElementCount == 0 && element.style.backgroundImage !== 'url("Images/white.png")')
             {
                 turnedElementCount++;
