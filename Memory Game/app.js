@@ -15,8 +15,6 @@ const card4 = new Card('ice-cream','images/ice-cream.png');
 const card5 = new Card('milkshake','images/milkshake.png');
 const card6 = new Card('pizza','images/pizza.png');
 
-let randomizedArray = [];
-
 const cardArray = [
     card1,
     card2,
@@ -32,11 +30,7 @@ const cardArray = [
     card6
 ]
 
-for (let i = 12; i > 0; i--) {
-    let randomNumber = Math.floor(Math.random()*i);
-    randomizedArray.push(cardArray[randomNumber]);
-    cardArray.splice(randomNumber,1);
-}
+cardArray.sort(() => 0.5 - Math.random())
 
 const grid = document.getElementById('grid');
 
@@ -50,10 +44,10 @@ let Cards = [];
 function startTheGame()
 {
     startTheGameButton.remove();
-    for (let i = 0; i < randomizedArray.length; i++) {
+    for (let i = 0; i < cardArray.length; i++) {
         let newElement = document.createElement('button');
-        newElement.id = randomizedArray[i].name;
-        newElement.style.backgroundImage = "url(" + randomizedArray[i].img + ")";
+        newElement.id = cardArray[i].name;
+        newElement.style.backgroundImage = "url(" + cardArray[i].img + ")";
         newElement.style.height = "10vw"
         newElement.style.width = "10vw"
         newElement.className= 'cards'
@@ -76,12 +70,13 @@ function countdown() {
 let score = document.getElementById('score');
 score.innerHTML= 0;
 
-function hideCards()
-{
-    
-    let turnedElementCount = 0;
+let turnedElementCount = 0;
     let turnedElement;
 
+
+
+function hideCards()
+{
     Cards.forEach(element => {
         element.style.backgroundImage = 'url("Images/blank.png")'
     });
@@ -104,16 +99,26 @@ function hideCards()
                     element.style.backgroundImage = "url('Images/white.png')";
                     turnedElementCount--;
                     score.innerHTML++;
+
                     if(score.innerHTML == 6)
                     {
                         window.location.reload();
                     }
                 }
                 else{
-                    turnedElement.style.backgroundImage = 'url("Images/blank.png")'
-                    turnedElementCount--;
+                    turnedElementCount++;
+                    element.style.backgroundImage = "url('Images/" + element.id + ".png')";
+                    setTimeout(showTwoPicsForASecond , 1000)
+                    
+                    function showTwoPicsForASecond()
+                    {
+                         turnedElement.style.backgroundImage = 'url("Images/blank.png")';
+                         element.style.backgroundImage = 'url("Images/blank.png")';
+                         turnedElementCount = 0;
+                    }
                 }
             }
         })
     });
 }
+
