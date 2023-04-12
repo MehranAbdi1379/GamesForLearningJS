@@ -1,19 +1,11 @@
 import React, { KeyboardEventHandler } from "react";
 import styles from "./PlayerBoard.module.css";
 
-const PlayerBoard = () => {
-  const elem = document.getElementById("PlayerBoard");
-  let elemMarginLeft = 300;
-  function handleKeyDown(event: any) {
-    if (event.key === "ArrowRight" && elemMarginLeft < 590) {
-      elemMarginLeft += 10;
-      if (elem) elem.style.marginLeft = elemMarginLeft + "px";
-    }
-    if (event.key === "ArrowLeft" && elemMarginLeft > 10) {
-      elemMarginLeft -= 10;
-      if (elem) elem.style.marginLeft = elemMarginLeft + "px";
-    }
-  }
+interface Props {
+  handleKeyDown: (event: any) => void;
+}
+
+const PlayerBoard = ({ handleKeyDown }: Props) => {
   return (
     <div
       className={styles.PlayerBoard}
