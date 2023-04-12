@@ -15,5 +15,5 @@
 
 .mole{
     background-image: url('mole.jpg');
-    background-size: contain;
+    background-size: cover;
 }
