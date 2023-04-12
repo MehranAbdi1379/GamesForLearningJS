@@ -24,7 +24,7 @@ const GameField = () => {
         <StartButton onClick={onStartGameClick}></StartButton>
       )}
       <BreakGroup></BreakGroup>
-      <Ball></Ball>
+      <Ball gameStarted={gameStarted}></Ball>
       <PlayerBoard></PlayerBoard>
     </div>
   );
