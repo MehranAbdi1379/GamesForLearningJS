@@ -1,0 +1,9 @@
+.PlayerBoard{
+    width: 200px;
+    height: 25px;
+    background-color: red;
+    border-radius: 20px;
+    margin-top: 190px;
+    margin-left: auto;
+    margin-right: auto;
+}
