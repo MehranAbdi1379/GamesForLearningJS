@@ -1,0 +1,9 @@
+.StartButton{
+    width: 250px;
+    height: 50px;
+    background-color: darkgoldenrod;
+    border-radius: 15px;
+    position: absolute;
+    top:270px;
+    left: 330px;
+}
