@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import GameField from "./GameField/GameField";
+import Lives from "./Lives/Lives";
 
 const GameControlls = () => {
   const [gameStarted, setGameStarted] = useState(false);
@@ -15,25 +16,32 @@ const GameControlls = () => {
   }
 
   const PlayerBoard = document.getElementById("PlayerBoard");
-  let PlayerBoardMarginLeft = 300;
+  const [playerBoardMarginLeft, setPlayerBoardMarginLeft] = useState(300);
+  let playerBoardMarginLefttemp = playerBoardMarginLeft;
   function handleKeyDown(event: any) {
-    if (event.key === "ArrowRight" && PlayerBoardMarginLeft < 590) {
-      PlayerBoardMarginLeft += 10;
+    if (event.key === "ArrowRight" && playerBoardMarginLefttemp < 590) {
+      playerBoardMarginLefttemp += 10;
       if (PlayerBoard)
-        PlayerBoard.style.marginLeft = PlayerBoardMarginLeft + "px";
+        PlayerBoard.style.marginLeft = playerBoardMarginLefttemp + "px";
     }
-    if (event.key === "ArrowLeft" && PlayerBoardMarginLeft > 10) {
-      PlayerBoardMarginLeft -= 10;
+    if (event.key === "ArrowLeft" && playerBoardMarginLefttemp > 10) {
+      playerBoardMarginLefttemp -= 10;
       if (PlayerBoard)
-        PlayerBoard.style.marginLeft = PlayerBoardMarginLeft + "px";
+        PlayerBoard.style.marginLeft = playerBoardMarginLefttemp + "px";
     }
   }
+
+  useEffect(() => {
+    const interval = setInterval(MoveBall, 5);
+    return () => clearInterval(interval);
+  });
+
+  const [lives, setLives] = useState(3);
 
   let ballMovingUp = true;
   let ballMovingRight = true;
   let ballMarginLeft = 400;
   let ballMarginTop = 170;
-  let id = setInterval(MoveBall, 5);
   const ball = document.getElementById("Ball");
 
   function MoveBall() {
@@ -52,15 +60,21 @@ const GameControlls = () => {
         }
         if (
           ballMarginTop == 360 &&
-          ballMarginLeft > PlayerBoardMarginLeft &&
-          ballMarginLeft < PlayerBoardMarginLeft + 200
+          ballMarginLeft > playerBoardMarginLefttemp &&
+          ballMarginLeft < playerBoardMarginLefttemp + 200
         ) {
           ballMovingUp = true;
         } else if (ballMarginTop == 360) {
-          //health--
+          setLives(lives - 1);
+          if (lives == 1) {
+            alert("Game Over!!!");
+            setGameStarted(false);
+            setLives(3);
+          }
+          setPlayerBoardMarginLeft(playerBoardMarginLefttemp);
           ballMarginLeft = 400;
           ballMarginTop = 170;
-          PlayerBoardMarginLeft = 300;
+          ballMovingUp = true;
         }
         if (ballMarginLeft == 15) ballMovingRight = true;
       } else if (
@@ -77,15 +91,21 @@ const GameControlls = () => {
         }
         if (
           ballMarginTop == 360 &&
-          ballMarginLeft > PlayerBoardMarginLeft &&
-          ballMarginLeft < PlayerBoardMarginLeft + 200
+          ballMarginLeft > playerBoardMarginLefttemp &&
+          ballMarginLeft < playerBoardMarginLefttemp + 200
         ) {
           ballMovingUp = true;
         } else if (ballMarginTop == 360) {
-          //health--
+          setLives(lives - 1);
+          if (lives == 1) {
+            alert("Game Over!!!");
+            setGameStarted(false);
+            setLives(3);
+          }
+          setPlayerBoardMarginLeft(playerBoardMarginLefttemp);
           ballMarginLeft = 400;
           ballMarginTop = 170;
-          PlayerBoardMarginLeft = 300;
+          ballMovingUp = true;
         }
         if (ballMarginLeft == 770) ballMovingRight = false;
       } else if (
@@ -120,11 +140,14 @@ const GameControlls = () => {
     }
   }
   return (
-    <GameField
-      handleKeyDown={handleKeyDown}
-      gameStarted={gameStarted}
-      onStartGameClick={onStartGameClick}
-    ></GameField>
+    <div>
+      <Lives Lives={lives}></Lives>
+      <GameField
+        handleKeyDown={handleKeyDown}
+        gameStarted={gameStarted}
+        onStartGameClick={onStartGameClick}
+      ></GameField>
+    </div>
   );
 };
 
