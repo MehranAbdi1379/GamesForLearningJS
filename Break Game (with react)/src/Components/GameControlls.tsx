@@ -3,6 +3,7 @@ import GameField from "./GameField/GameField";
 import Lives from "./Lives/Lives";
 
 const GameControlls = () => {
+  const [active, setActive] = useState<boolean[]>([]);
   const [gameStarted, setGameStarted] = useState(false);
   function onStartGameClick() {
     setGameStarted(true);
@@ -12,6 +13,15 @@ const GameControlls = () => {
     const id = setInterval(focusOnPlayer, 1000);
     function focusOnPlayer() {
       PlayerBoard?.focus();
+    }
+
+    let activeList: boolean[] = [];
+    for (let i = 0; i < 10; i++) {
+      activeList.push(true);
+    }
+
+    if (gameStarted == false) {
+      setActive(activeList);
     }
   }
 
@@ -139,10 +149,12 @@ const GameControlls = () => {
       }
     }
   }
+
   return (
     <div>
       <Lives Lives={lives}></Lives>
       <GameField
+        active={active}
         handleKeyDown={handleKeyDown}
         gameStarted={gameStarted}
         onStartGameClick={onStartGameClick}

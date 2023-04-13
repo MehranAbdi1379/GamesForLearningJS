@@ -3,10 +3,16 @@ import styles from "./Break.module.css";
 
 interface Props {
   id: string;
+  active: boolean;
 }
 
-const Break = ({ id }: Props) => {
-  return <div className={styles.Break} id={id}></div>;
+const Break = ({ id, active }: Props) => {
+  return (
+    <>
+      {active && <div className={styles.BreakActive} id={id}></div>}
+      {active == false && <div className={styles.BreakDeactive} id={id}></div>}
+    </>
+  );
 };
 
 export default Break;

@@ -10,16 +10,22 @@ interface Props {
   gameStarted: boolean;
   onStartGameClick: () => void;
   handleKeyDown: (event: any) => void;
+  active: boolean[];
 }
 
-const GameField = ({ gameStarted, onStartGameClick, handleKeyDown }: Props) => {
+const GameField = ({
+  gameStarted,
+  onStartGameClick,
+  handleKeyDown,
+  active,
+}: Props) => {
   return (
     <div className={styles.GameField} id="GameField">
       {gameStarted == false && (
         <StartButton onClick={onStartGameClick}></StartButton>
       )}
-      <BreakGroup></BreakGroup>
-      <Ball gameStarted={gameStarted}></Ball>
+      <BreakGroup active={active}></BreakGroup>
+      <Ball></Ball>
       <PlayerBoard handleKeyDown={handleKeyDown}></PlayerBoard>
     </div>
   );
